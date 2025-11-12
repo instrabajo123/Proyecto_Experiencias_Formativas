@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Publicar Trabajo | Galería Virtual</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header>
+    <h1>Publicar Trabajo</h1>
+    <nav>
+      <a href="index.html">🏠 Inicio</a>
+      <button id="logoutBtn">Cerrar Sesión</button>
+    </nav>
+  </header>
+
+  <main class="form-container">
+    <h2>Sube tu creación</h2>
+    <form id="Publicar">
+      <input type="text" id="titulo" placeholder="Título del trabajo" required><br>
+      <textarea id="descripcion" placeholder="Descripción" required></textarea><br>
+      <input type="number" id="precio" placeholder="Precio (S/)" required><br>
+      <input type="file" id="imagen" accept="image/*" required><br>
+      <button type="submit">Publicar</button>
+    </form>
+
+    <p id="mensaje"></p>
+  </main>
+
+  <footer>
+    <p>© 2025 Galería Virtual / Marketplace. Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+
+  <script src="script_publicar.js"></script>
+</body>
+</html>

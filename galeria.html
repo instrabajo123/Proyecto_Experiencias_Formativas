@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galería de Trabajos | Galería Virtual</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header>
+    <h1>🎨 Galería de Trabajos</h1>
+    <nav>
+      <a href="index.html">🏠 Inicio</a>
+      <a href="publicar.html">➕ Publicar</a>
+      <button id="logoutBtn">Cerrar Sesión</button>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Explora las Creaciones</h2>
+    <div id="galeria-container" class="galeria-grid">
+      <!-- Aquí se cargarán los trabajos -->
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 Galería Virtual / Marketplace. Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+
+  <!-- Tu script -->
+  <script src="script_galeria.js"></script>
+</body>
+</html>

@@ -1,68 +1,64 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login | Galería Virtual - Marketplace</title>
-
-  <!-- ✅ Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <title>Iniciar Sesión | Galería Virtual</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #eef2ff;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .login-box {
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 400px;
+    }
+    .login-box h1 {
+      margin-bottom: 20px;
+      color: #004aad;
+    }
+    .login-box p {
+      margin-bottom: 30px;
+      color: #555;
+    }
+    .login-box button {
+      background-color: #004aad;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .login-box img {
+      width: 80px;
+      margin-bottom: 20px;
+    }
+  </style>
 </head>
-<body class="bg-gradient-to-r from-blue-500 to-purple-600 min-h-screen flex flex-col items-center justify-center">
+<body>
 
-  <!-- ✅ CABECERA -->
-  <header class="w-full bg-white shadow-md py-4 px-6 mb-8">
-    <h1 class="text-2xl sm:text-3xl font-bold text-center text-gray-800">
-      Galería Virtual – Marketplace
-    </h1>
-  </header>
-
-  <!-- ✅ TARJETA DE LOGIN -->
-  <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-sm">
-    <h2 class="text-2xl font-semibold text-center text-gray-700 mb-6">Iniciar Sesión</h2>
-
-    <form id="loginForm" class="space-y-4">
-      <div>
-        <label class="block text-sm text-gray-600">Usuario</label>
-        <input type="text" id="username" required
-          class="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
-      </div>
-
-      <div>
-        <label class="block text-sm text-gray-600">Contraseña</label>
-        <input type="password" id="password" required
-          class="w-full mt-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
-      </div>
-
-      <button type="submit"
-        class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200">
-        Entrar
-      </button>
-    </form>
-
-    <p id="message" class="mt-4 text-center text-red-500 hidden">Usuario o contraseña incorrectos</p>
+  <div class="login-box">
+    <img src="https://via.placeholder.com/80.png?text=GV" alt="Logo">
+    <h1>Bienvenido</h1>
+    <p>Accede a tu cuenta para publicar, comprar y explorar trabajos creativos.</p>
+    <button onclick="iniciarSesion()">Iniciar sesión con Google</button>
   </div>
 
-  <!-- ✅ SCRIPT DE VALIDACIÓN -->
   <script>
-    const USER = "admin";
-    const PASS = "1234";
-
-    const form = document.getElementById("loginForm");
-    const message = document.getElementById("message");
-
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      const username = document.getElementById("username").value.trim();
-      const password = document.getElementById("password").value.trim();
-
-      if (username === USER && password === PASS) {
-        alert("Login exitoso ✅");
-        window.location.href = "dashboard.html"; // puedes cambiar esto
-      } else {
-        message.classList.remove("hidden");
-      }
-    });
+    function iniciarSesion() {
+      alert("🔐 Simulación de inicio de sesión con Google.");
+      // Aquí iría tu lógica real con Firebase Auth
+    }
   </script>
 
 </body>
