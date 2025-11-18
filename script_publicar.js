@@ -61,16 +61,16 @@ if (!form) {
       console.log("✅ Imagen subida correctamente:", imageUrl);
 
       console.log("🗂️ Guardando datos en Firestore...");
-      await db.collection('trabajos').add({
-        titulo,
-        descripcion,
-        precio,
-        imageUrl,
-        autor: user.displayName,
-        autorId: user.uid,
-        aprobado: true,
-        fecha: firebase.firestore.FieldValue.serverTimestamp()
-      });
+     await db.collection('trabajos').add({
+      titulo,
+      descripcion,
+      precio,
+      imageUrl,
+      autor: user.displayName,
+      autorId: user.uid,
+      aprobado: false,
+      fecha: firebase.firestore.FieldValue.serverTimestamp()
+     });
 
       alert("✅ Trabajo publicado correctamente.");
         form.reset();

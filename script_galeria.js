@@ -22,7 +22,10 @@ async function cargarTrabajos() {
   galeriaContainer.innerHTML = "<p>Cargando trabajos...</p>";
 
   try {
-    const snapshot = await db.collection("trabajos").orderBy("fecha", "desc").get();
+    const snapshot = await db.collection("trabajos")
+  .where("aprobado", "==", true)
+  .orderBy("fecha", "desc")
+  .get();
     galeriaContainer.innerHTML = ""; // Limpiar contenedor
 
     if (snapshot.empty) {
