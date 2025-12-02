@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Mi Portafolio</title>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+  <header class="header-hero"><div class="logo">Galería Virtual</div><nav><a href="/views/index.html">Inicio</a></nav></header>
+
+  <main style="padding:24px 36px;max-width:900px;margin:0 auto;">
+    <div id="perfil" style="display:flex;gap:18px;align-items:center">
+      <img id="perfilFoto" src="" alt="Foto" style="width:96px;height:96px;border-radius:14px;object-fit:cover;background:#eee">
+      <div>
+        <h2 id="perfilNombre">Usuario</h2>
+        <p id="perfilBio" style="color:var(--muted)">—</p>
+        <div id="perfilStats" style="color:var(--muted);margin-top:8px"></div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:20px">Trabajos publicados</h3>
+    <div class="galeria" id="misTrabajos"></div>
+  </main>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+
+  <script src="../assets/js/firebase.js"></script>
+  <script>
+    // script_portafolio inline simple (usa window.db, window.auth)
+    const auth = window.auth, db = window.db;
+    const foto = document.getElementById('perfilFoto'), nombre = document.getElementById('perfilNombre'), bio = document.getElementById('perfilBio'), stats = document.getElementById('perfilStats'), misTrabajos = document.getElementById('misTrabajos');
+
+    auth.onAuthStateChanged(async user => {
+      if(!user) return window.location.href = "/views/index.html";
+      foto.src = user.photoURL || 'https://via.placeholder.com/96';
+      nombre.textContent = user.displayName || user.email;
+      // obtener trabajos del usuario
+      const snapshot = await db.collection('trabajos').where('autorId','==',user.uid).orderBy('fecha','desc').get();
+      misTrabajos.innerHTML = '';
+      snapshot.forEach(doc => {
+        const t = doc.data();
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `<img src="${t.imageUrl}"><div class="contenido"><h3>${t.titulo}</h3><p>${t.descripcion.slice(0,140)}${t.descripcion.length>140?'...':''}</p><div class="precio">S/ ${Number(t.precio).toFixed(2)}</div></div>`;
+        misTrabajos.appendChild(card);
+      });
+      stats.textContent = `${snapshot.size} trabajos publicados`;
+    });
+  </script>
+</body>
+</html>

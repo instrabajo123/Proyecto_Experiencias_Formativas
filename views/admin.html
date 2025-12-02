@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Panel Admin — Galería</title>
+  <link rel="stylesheet" href="../assets/css/admin.css">
+</head>
+<body>
+  <header class="admin-header">
+    <div class="brand">Administrador</div>
+    <div class="actions">
+      <button id="btnUsuarios">Usuarios</button>
+      <button id="btnCerrarSesion">Cerrar sesión</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="controls">
+      <input id="busqueda" placeholder="Buscar título o autor...">
+      <select id="filtroEstado"><option value="pendiente">Pendientes</option><option value="aprobado">Aprobados</option><option value="rechazado">Rechazados</option><option value="todos">Todos</option></select>
+      <button id="btnRecargar">Recargar</button>
+    </div>
+
+    <div class="admin-main">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Imagen</th><th>Título</th><th>Autor</th><th>Fecha</th><th>Estado</th><th>Acción</th></tr></thead>
+          <tbody id="tablaTrabajos"></tbody>
+        </table>
+      </div>
+
+      <div class="panel-detalle hidden" id="panelDetalle">
+        <!-- detalle generado por JS -->
+      </div>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+
+  <script src="../assets/js/firebase.js"></script>
+  <script src="../assets/js/script_admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+/* /assets/css/styles.css
+   Estilo A: minimal / Behance-like
+   Reemplazar completo este archivo.
+*/
+
+/* ---------- RESET & VARIABLES ---------- */
+* { box-sizing: border-box; }
+:root {
+  --bg: #f7f7fb;
+  --card: #ffffff;
+  --muted: #6b7280;
+  --accent: #4f46e5;
+  --accent-2: #4338ca;
+  --text: #0f172a;
+  --radius: 12px;
+  --max-width: 1200px;
+}
+
+html, body { height: 100%; }
+body{
+  margin: 0;
+  font-family: Inter, "Helvetica Neue", Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height: 1.45;
+}
+
+/* ---------- NAVBAR ---------- */
+.header-hero {
+  background: linear-gradient(90deg,var(--accent-2),var(--accent));
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 28px;
+}
+.header-hero .logo {
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.2px;
+}
+.nav-right { display:flex; align-items:center; gap:12px; }
+.nav-link { color: rgba(255,255,255,0.95); text-decoration:none; font-size:14px; padding:6px 8px; border-radius:8px; }
+.nav-link:hover { background: rgba(255,255,255,0.05); }
+
+.btn {
+  border: none;
+  border-radius: 10px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.btn-primary {
+  background: #10b981;
+  color: #fff;
+}
+.btn-primary:hover { filter:brightness(.95); }
+.btn-ghost {
+  background: transparent;
+  color: white;
+  border: 1px solid rgba(255,255,255,0.18);
+}
+
+/* ---------- HERO ---------- */
+.hero {
+  text-align: center;
+  padding: 56px 20px;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+.hero h1 { font-size: 34px; margin: 0 0 8px; font-weight: 700; }
+.hero-sub { color: var(--muted); margin:0 0 18px; }
+
+/* ---------- LOADING SKELETON ---------- */
+.loading-row { display:flex; gap:18px; padding:20px; justify-content:flex-start; max-width:var(--max-width); margin: 0 auto; }
+.skeleton {
+  flex: 0 0 280px;
+  height: 180px;
+  border-radius: 12px;
+  background: linear-gradient(90deg,#e9e9ef,#f7f7fb,#e9e9ef);
+  background-size: 200% 100%;
+  animation: shimmer 1.1s linear infinite;
+}
+@keyframes shimmer { 0%{ background-position: -200px 0 } 100%{ background-position: 200px 0 } }
+
+/* ---------- GALERÍA GRID ---------- */
+.titulo-seccion { max-width: var(--max-width); margin: 30px auto 6px; padding: 0 20px; font-weight:700; color:#111827; }
+.galeria {
+  max-width: var(--max-width);
+  margin: 0 auto 60px;
+  padding: 10px 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  align-items:start;
+  justify-items:center;
+}
+
+/* ---------- TARJETA (card) ---------- */
+.card {
+  width: 100%;
+  max-width: 320px;
+  background: var(--card);
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 26px rgba(14,20,39,0.06);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.card:hover { transform: translateY(-8px); box-shadow: 0 18px 40px rgba(14,20,39,0.09); }
+
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display:block;
+}
+
+.card .contenido {
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 140px;
+}
+
+.card h3 { margin: 0; font-size: 17px; line-height: 1.15; }
+.card p { margin:0; color: var(--muted); font-size: 13px; line-height: 1.3; max-height: 56px; overflow: hidden; text-overflow: ellipsis; }
+
+.card .meta {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:auto;
+}
+.autor { color:var(--muted); font-size:13px; }
+.precio { color: var(--accent-2); font-weight:700; }
+
+/* ---------- FOOTER ---------- */
+.footer { padding: 22px; color: var(--muted); font-size:13px; text-align:left; max-width:var(--max-width); margin: 0 auto 40px; }
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 900px) {
+  .hero h1 { font-size: 28px; }
+  .loading-row { justify-content: center; }
+}
+@media (max-width: 480px) {
+  .header-hero { padding: 12px; }
+  .nav-right { gap:8px; font-size:13px; }
+  .card img { height:160px; }}

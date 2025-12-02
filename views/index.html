@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Galería Virtual / Marketplace</title>
+
+  <!-- RUTA RELATIVA: desde /views a /assets -->
+  <link rel="stylesheet" href="../assets/css/styles.css">
+
+  <!-- Tip: no uses cdn.tailwind en producción; aquí lo removimos para estilo propio -->
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header class="header-hero">
+    <div class="left">
+      <div class="logo">Galería Virtual</div>
+    </div>
+
+    <nav class="nav-right">
+      <a href="/views/index.html" class="nav-link">Inicio</a>
+      <a href="/views/portafolio.html" class="nav-link">Mi Portafolio</a>
+      <a href="#" class="nav-link">Explorar</a>
+      <a href="#" class="nav-link">Pedidos</a>
+
+      <!-- Botón publicar (link) -->
+      <a href="/views/publicar.html" class="btn btn-primary">Publicar</a>
+
+      <!-- Botón Admin aparece solo si rol === "admin" -->
+      <button id="adminBtn" class="btn btn-ghost" style="display:none">🛠 Panel Admin</button>
+
+      <!-- Login / Logout -->
+      <button id="loginBtn" class="btn btn-ghost">Acceder</button>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1>Explora, compra y vende talento creativo</h1>
+    <p class="hero-sub">Un espacio donde estudiantes y profesionales presentan sus trabajos al mundo.</p>
+  </section>
+
+  <!-- SKELETON (mientras carga) -->
+  <div id="galeria-loading" class="loading-row">
+    <div class="skeleton"></div>
+    <div class="skeleton"></div>
+    <div class="skeleton"></div>
+  </div>
+
+  <!-- GALERÍA -->
+  <main>
+    <h2 class="titulo-seccion">Trabajos publicados</h2>
+    <div class="galeria" id="galeria-container" aria-live="polite"></div>
+  </main>
+
+  <footer class="footer">
+    <p>© 2025 Galería Virtual / Marketplace. Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- Firebase SDKs (orden importante) -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+
+  <!-- app scripts -->
+  <script src="../assets/js/firebase.js"></script>
+  <script src="../assets/js/script.js"></script>
+</body>
+</html>
