@@ -1,47 +1,197 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Panel Admin — Galería</title>
-  <link rel="stylesheet" href="../assets/css/admin.css">
+  <meta charset="UTF-8">
+  <title>Panel Admin | Galería Virtual</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <link rel="stylesheet" href="/assets/css/ui.css">
+
+  <style>
+    /* Ajustes propios de admin */
+    .admin-layout {
+      display: grid;
+      grid-template-columns: 1fr 350px;
+      gap: 20px;
+      padding: 20px;
+      max-width: 1400px;
+      margin: 20px auto;
+    }
+
+    .admin-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 18px;
+    }
+
+    .admin-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: .2s;
+    }
+
+    .admin-card:hover {
+      transform: scale(1.02);
+    }
+
+    .admin-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+    }
+
+    .admin-card h4 {
+      padding: 10px;
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #333;
+    }
+
+    /* Panel derecho */
+    #panelDetalle {
+      background: white;
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+      display: none;
+      position: sticky;
+      top: 80px;
+      height: fit-content;
+    }
+
+    #panelDetalle img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    #panelDetalle button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    #btnAprobar {
+      background: #10B981;
+      color: white;
+    }
+
+    #btnAprobar:hover {
+      background: #0e9a6d;
+    }
+
+    #btnRechazar {
+      background: #EF4444;
+      color: white;
+    }
+
+    #btnRechazar:hover {
+      background: #c93535;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 80px;
+      resize: none;
+      margin-top: 6px;
+      border-radius: 8px;
+      padding: 8px;
+    }
+
+    select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+    }
+  </style>
 </head>
+
 <body>
-  <header class="admin-header">
-    <div class="brand">Administrador</div>
-    <div class="actions">
-      <button id="btnUsuarios">Usuarios</button>
-      <button id="btnCerrarSesion">Cerrar sesión</button>
-    </div>
-  </header>
 
-  <div class="container">
-    <div class="controls">
-      <input id="busqueda" placeholder="Buscar título o autor...">
-      <select id="filtroEstado"><option value="pendiente">Pendientes</option><option value="aprobado">Aprobados</option><option value="rechazado">Rechazados</option><option value="todos">Todos</option></select>
-      <button id="btnRecargar">Recargar</button>
-    </div>
+<!-- NAVBAR GLOBAL -->
+<header class="header-hero">
+  <div class="logo">Galería Virtual</div>
 
-    <div class="admin-main">
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Imagen</th><th>Título</th><th>Autor</th><th>Fecha</th><th>Estado</th><th>Acción</th></tr></thead>
-          <tbody id="tablaTrabajos"></tbody>
-        </table>
-      </div>
+  <nav class="nav-right">
+    <a class="nav-link" href="/views/index.html">Inicio</a>
+    <a class="nav-link" href="/views/publicar.html">Publicar</a>
 
-      <div class="panel-detalle hidden" id="panelDetalle">
-        <!-- detalle generado por JS -->
+    <div id="userMenuWrapper" style="display:none; position:relative;">
+      <div id="avatarUser" class="user-avatar">U</div>
+
+      <div id="userDropdown" class="menu-dropdown hidden">
+        <button class="menu-item" onclick="location.href='/views/portafolio.html'">📁 Mi portafolio</button>
+        <button class="menu-item" onclick="location.href='/views/mis_publicaciones.html'">🧾 Mis publicaciones</button>
+        <button class="menu-item" onclick="location.href='/views/perfil.html'">⚙️ Perfil</button>
+
+        <hr>
+        <button id="logoutBtn" class="menu-item logout">🚪 Cerrar sesión</button>
       </div>
     </div>
+
+    <button id="loginBtn" class="btn btn-ghost">Acceder</button>
+  </nav>
+</header>
+
+<h1 style="text-align:center; margin-top:25px;">Panel de Administración</h1>
+
+<div class="admin-layout">
+
+  <!-- LISTA DE PENDIENTES -->
+  <div>
+    <h2>Trabajos pendientes</h2>
+    <div id="listaPendientes" class="admin-list"></div>
   </div>
 
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+  <!-- PANEL DETALLE -->
+  <div id="panelDetalle">
+    <img id="detalleImg" src="">
+    <h3 id="detalleTitulo"></h3>
+    <p id="detalleDesc"></p>
+    <p id="detalleAutor" style="font-weight:bold;"></p>
 
-  <script src="../assets/js/firebase.js"></script>
-  <script src="../assets/js/script_admin.js"></script>
+    <label>Categoría:</label>
+    <select id="detalleCategoria">
+      <option value="">Seleccione una categoría</option>
+      <option value="Ilustración">Ilustración</option>
+      <option value="Diseño Web">Diseño Web</option>
+      <option value="Fotografía">Fotografía</option>
+      <option value="Aplicaciones">Aplicaciones</option>
+    </select>
+
+    <label>Motivo de rechazo:</label>
+    <textarea id="detalleMotivo" placeholder="Escriba motivo si va a rechazar..."></textarea>
+
+    <button id="btnAprobar">Aprobar</button>
+    <button id="btnRechazar">Rechazar</button>
+  </div>
+
+</div>
+
+<footer class="footer">© 2025 Galería Virtual</footer>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+
+<script src="/assets/js/firebase.js"></script>
+<script src="/assets/js/script.js"></script>
+<script src="/assets/js/script_admin.js"></script>
+
 </body>
 </html>

@@ -1,70 +1,69 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
   <title>Galería Virtual / Marketplace</title>
-
-  <!-- RUTA RELATIVA: desde /views a /assets -->
-  <link rel="stylesheet" href="../assets/css/styles.css">
-
-  <!-- Tip: no uses cdn.tailwind en producción; aquí lo removimos para estilo propio -->
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <link rel="stylesheet" href="/assets/css/ui.css">
 </head>
 <body>
-  <!-- NAVBAR -->
-  <header class="header-hero">
-    <div class="left">
-      <div class="logo">Galería Virtual</div>
+
+<header class="header-hero">
+  <div class="logo">Galería Virtual</div>
+
+  <nav class="nav-right">
+
+    <a href="/views/index.html" class="nav-link">Inicio</a>
+    <a href="/views/explorar.html" class="nav-link">Explorar</a>
+    <a href="/views/publicar.html" class="nav-link">Publicar</a>
+
+    <button id="loginBtn" class="btn btn-ghost">Acceder</button>
+
+    <div id="userMenuWrapper" style="display:none; position:relative;">
+      <div id="avatarUser" class="user-avatar">U</div>
+
+      <div id="userDropdown" class="menu-dropdown">
+        <button class="menu-item" onclick="location.href='/views/portafolio.html'">📁 Mi portafolio</button>
+        <button class="menu-item" onclick="location.href='/views/mis_publicaciones.html'">🧾 Mis publicaciones</button>
+        <button class="menu-item" onclick="location.href='/views/pedidos.html'">🛒 Mis pedidos</button>
+        <button class="menu-item" onclick="location.href='/views/perfil.html'">⚙️ Perfil</button>
+
+        <button id="panelAdminBtn" class="menu-item hidden" onclick="location.href='/views/admin.html'">🛠 Panel Admin</button>
+
+        <hr>
+        <button id="logoutBtn" class="menu-item logout">🚪 Cerrar sesión</button>
+      </div>
     </div>
+  </nav>
+</header>
 
-    <nav class="nav-right">
-      <a href="/views/index.html" class="nav-link">Inicio</a>
-      <a href="/views/portafolio.html" class="nav-link">Mi Portafolio</a>
-      <a href="#" class="nav-link">Explorar</a>
-      <a href="#" class="nav-link">Pedidos</a>
 
-      <!-- Botón publicar (link) -->
-      <a href="/views/publicar.html" class="btn btn-primary">Publicar</a>
+<section class="hero">
+  <h1>Explora, compra y vende talento creativo</h1>
+  <p class="hero-sub">Un espacio donde estudiantes y profesionales presentan sus trabajos al mundo</p>
+</section>
 
-      <!-- Botón Admin aparece solo si rol === "admin" -->
-      <button id="adminBtn" class="btn btn-ghost" style="display:none">🛠 Panel Admin</button>
+<div id="galeria-loading" class="loading-row">
+  <div class="skeleton"></div>
+  <div class="skeleton"></div>
+  <div class="skeleton"></div>
+</div>
 
-      <!-- Login / Logout -->
-      <button id="loginBtn" class="btn btn-ghost">Acceder</button>
-    </nav>
-  </header>
+<section>
+  <h2 class="titulo-seccion">Trabajos publicados</h2>
+  <div class="galeria" id="galeria-container"></div>
+</section>
 
-  <!-- HERO -->
-  <section class="hero">
-    <h1>Explora, compra y vende talento creativo</h1>
-    <p class="hero-sub">Un espacio donde estudiantes y profesionales presentan sus trabajos al mundo.</p>
-  </section>
+<footer class="footer">© 2025 Galería Virtual / Marketplace</footer>
 
-  <!-- SKELETON (mientras carga) -->
-  <div id="galeria-loading" class="loading-row">
-    <div class="skeleton"></div>
-    <div class="skeleton"></div>
-    <div class="skeleton"></div>
-  </div>
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
 
-  <!-- GALERÍA -->
-  <main>
-    <h2 class="titulo-seccion">Trabajos publicados</h2>
-    <div class="galeria" id="galeria-container" aria-live="polite"></div>
-  </main>
-
-  <footer class="footer">
-    <p>© 2025 Galería Virtual / Marketplace. Todos los derechos reservados.</p>
-  </footer>
-
-  <!-- Firebase SDKs (orden importante) -->
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
-
-  <!-- app scripts -->
-  <script src="../assets/js/firebase.js"></script>
-  <script src="../assets/js/script.js"></script>
+<!-- App scripts -->
+<script src="/assets/js/firebase.js"></script>
+<script src="/assets/js/script.js"></script>
 </body>
 </html>

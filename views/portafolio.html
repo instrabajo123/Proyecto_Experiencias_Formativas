@@ -1,54 +1,77 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Mi Portafolio</title>
-  <link rel="stylesheet" href="../assets/css/styles.css">
-</head>
-<body>
-  <header class="header-hero"><div class="logo">Galería Virtual</div><nav><a href="/views/index.html">Inicio</a></nav></header>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mi Portafolio | Galería Virtual</title>
 
-  <main style="padding:24px 36px;max-width:900px;margin:0 auto;">
-    <div id="perfil" style="display:flex;gap:18px;align-items:center">
-      <img id="perfilFoto" src="" alt="Foto" style="width:96px;height:96px;border-radius:14px;object-fit:cover;background:#eee">
-      <div>
-        <h2 id="perfilNombre">Usuario</h2>
-        <p id="perfilBio" style="color:var(--muted)">—</p>
-        <div id="perfilStats" style="color:var(--muted);margin-top:8px"></div>
+  <!-- ESTILOS GLOBALES -->
+  <link rel="stylesheet" href="/assets/css/styles.css">
+  <link rel="stylesheet" href="/assets/css/ui.css">
+</head>
+
+<body>
+
+<header class="header-hero">
+  <div class="logo">Galería Virtual</div>
+
+  <nav class="nav-right">
+    <a href="/views/index.html" class="nav-link">Inicio</a>
+    <a href="/views/explorar.html" class="nav-link">Explorar</a>
+    <a href="/views/publicar.html" class="nav-link">Publicar</a>
+
+    <!-- BOTÓN LOGIN -->
+    <button id="loginBtn" class="btn btn-ghost">Acceder</button>
+
+    <!-- MENÚ USUARIO -->
+    <div id="userMenuWrapper" style="display:none; position:relative;">
+      <div id="avatarUser" class="user-avatar">U</div>
+
+      <div id="userDropdown" class="menu-dropdown hidden">
+        <p class="menu-section-title">Cuenta</p>
+
+        <button class="menu-item" onclick="location.href='/views/portafolio.html'">📁 Mi portafolio</button>
+        <button class="menu-item" onclick="location.href='/views/mis_publicaciones.html'">🧾 Mis publicaciones</button>
+        <button class="menu-item" onclick="location.href='/views/pedidos.html'">🛒 Mis compras</button>
+        <button class="menu-item" onclick="location.href='/views/perfil.html'">⚙️ Perfil</button>
+
+        <button id="panelAdminBtn" class="menu-item admin-item hidden" onclick="location.href='/views/admin.html'">🛠 Panel Admin</button>
+
+        <hr class="menu-line">
+        <button id="logoutBtn" class="menu-item logout">🚪 Cerrar sesión</button>
       </div>
     </div>
+  </nav>
+</header>
 
-    <h3 style="margin-top:20px">Trabajos publicados</h3>
-    <div class="galeria" id="misTrabajos"></div>
-  </main>
+<main style="max-width:1200px; margin:30px auto; padding:0 18px;">
+  <h2 class="titulo-seccion">Mi Portafolio</h2>
 
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+  <!-- LOADING -->
+  <div id="portafolio-loading" class="loading-row">
+    <div class="skeleton"></div>
+    <div class="skeleton"></div>
+    <div class="skeleton"></div>
+  </div>
 
-  <script src="../assets/js/firebase.js"></script>
-  <script>
-    // script_portafolio inline simple (usa window.db, window.auth)
-    const auth = window.auth, db = window.db;
-    const foto = document.getElementById('perfilFoto'), nombre = document.getElementById('perfilNombre'), bio = document.getElementById('perfilBio'), stats = document.getElementById('perfilStats'), misTrabajos = document.getElementById('misTrabajos');
+  <!-- CONTENEDOR DE TRABAJOS -->
+  <div id="portafolio-container" class="galeria"></div>
+</main>
 
-    auth.onAuthStateChanged(async user => {
-      if(!user) return window.location.href = "/views/index.html";
-      foto.src = user.photoURL || 'https://via.placeholder.com/96';
-      nombre.textContent = user.displayName || user.email;
-      // obtener trabajos del usuario
-      const snapshot = await db.collection('trabajos').where('autorId','==',user.uid).orderBy('fecha','desc').get();
-      misTrabajos.innerHTML = '';
-      snapshot.forEach(doc => {
-        const t = doc.data();
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `<img src="${t.imageUrl}"><div class="contenido"><h3>${t.titulo}</h3><p>${t.descripcion.slice(0,140)}${t.descripcion.length>140?'...':''}</p><div class="precio">S/ ${Number(t.precio).toFixed(2)}</div></div>`;
-        misTrabajos.appendChild(card);
-      });
-      stats.textContent = `${snapshot.size} trabajos publicados`;
-    });
-  </script>
+<footer class="footer">
+  © 2025 Galería Virtual / Marketplace. Todos los derechos reservados.
+</footer>
+
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+
+<!-- SCRIPTS -->
+<script src="/assets/js/firebase.js"></script>
+<script src="/assets/js/script.js"></script>
+<script src="/assets/js/script_portafolio.js"></script>
+
 </body>
 </html>

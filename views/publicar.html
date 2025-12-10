@@ -2,38 +2,30 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Publicar Trabajo | Galería Virtual</title>
-  <link rel="stylesheet" href="../assets/css/styles.css">
+  <title>Publicar Trabajo</title>
+  <link rel="stylesheet" href="/assets/css/styles.css">
 </head>
 <body>
-  <header style="padding:14px 36px;background:#fff;border-bottom:1px solid #eef2ff">
-    <a href="/views/index.html">🏠 Inicio</a>
-  </header>
+  <header class="header-hero"><div class="logo">Galería Virtual</div></header>
 
-  <main style="padding:28px 36px;max-width:800px;margin:0 auto">
+  <main style="max-width:700px;margin:30px auto;padding:18px;">
     <h2>Publicar Trabajo</h2>
-
-    <form id="Publicar" style="display:flex;flex-direction:column;gap:12px;margin-top:12px">
-      <input id="titulo" placeholder="Título del trabajo" required />
-      <textarea id="descripcion" placeholder="Descripción" required></textarea>
-      <input id="precio" type="number" placeholder="Precio (S/)" required />
-      <input id="imagen" type="file" accept="image/*" required />
-      <button type="submit" class="btn-publicar" style="width:160px">Publicar</button>
+    <form id="formPublicar">
+      <input id="titulo" placeholder="Título" required style="width:100%;padding:10px;margin:8px 0;">
+      <textarea id="descripcion" placeholder="Descripción" required style="width:100%;padding:10px;margin:8px 0;"></textarea>
+      <input id="precio" type="number" placeholder="Precio" style="padding:10px;margin:8px 0;">
+      <input id="imagen" type="file" accept="image/*" style="margin:8px 0;">
+      <button type="submit" class="btn btn-primary">Publicar</button>
     </form>
-
-    <p id="mensaje" style="color:var(--muted);margin-top:8px"></p>
+    <p id="mensaje"></p>
   </main>
 
-  <footer style="padding:18px 36px"></footer>
-
-  <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
 
-  <script src="../assets/js/firebase.js"></script>
-  <script src="../assets/js/script_publicar.js"></script>
+  <script src="/assets/js/firebase.js"></script>
+  <script src="/assets/js/script_publicar.js"></script>
 </body>
 </html>

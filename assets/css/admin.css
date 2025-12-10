@@ -1,20 +1,46 @@
-/* /assets/css/admin.css - estilo sobrio para admin */
-:root{--bg:#f4f6fb;--panel:#fff;--muted:#6b7280;--accent:#4338CA;--border:#e6e9f2}
-*{box-sizing:border-box;font-family:Inter, Arial, sans-serif}
-body{margin:0;background:var(--bg);color:#111}
-.admin-header{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#0f172a;color:white}
-.container{padding:18px 20px}
-.controls{display:flex;gap:10px;align-items:center;margin-bottom:12px}
-.controls input,.controls select,.controls button{padding:8px;border-radius:8px;border:1px solid var(--border);background:var(--panel)}
-.admin-main{display:grid;grid-template-columns:1fr 360px;gap:18px}
-.table-wrap{background:var(--panel);border-radius:8px;padding:8px;border:1px solid var(--border);overflow:auto}
-table{width:100%;border-collapse:collapse;font-size:13px}
-thead th{font-weight:600;text-align:left;padding:10px;border-bottom:1px solid var(--border);color:var(--muted)}
-tbody td{padding:10px;border-bottom:1px solid var(--border);vertical-align:middle}
-.thumbnail{width:64px;height:48px;object-fit:cover;border-radius:6px;border:1px solid #eee}
-.panel-detalle{background:var(--panel);border-radius:8px;padding:12px;border:1px solid var(--border);min-height:280px}
-.panel-detalle img{width:100%;height:180px;object-fit:cover;border-radius:6px;margin-bottom:8px}
-.btns{display:flex;gap:8px;margin-top:8px}
-.aprobar{background:#10b981;color:white;padding:8px;border-radius:6px;border:none}
-.rechazar{background:#ef4444;color:white;padding:8px;border-radius:6px;border:none}
-.hidden{display:none}
+/* GRID DE TRABAJOS PENDIENTES */
+.lista-admin {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+/* CARD ADMIN */
+.admin-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.2s;
+  text-align: center;
+}
+
+.admin-card:hover {
+  transform: translateY(-5px);
+}
+
+.admin-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.admin-card h4 {
+  margin: 10px 0 4px;
+}
+
+.admin-card p {
+  color: #555;
+  margin-bottom: 10px;
+}
+
+/* PANEL DE DETALLE */
+#panelDetalle {
+  margin-top: 20px;
+  padding: 20px;
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
