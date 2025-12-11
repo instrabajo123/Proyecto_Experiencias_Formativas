@@ -255,3 +255,67 @@ a {
 .btn-comprar:hover {
   background: #1d4ed8;
 }
+
+
+
+/* ===========================
+   PUBLICAR - FORMULARIO
+============================== */
+.publicar-container {
+  max-width: 650px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #ffffffd9;
+  backdrop-filter: blur(4px);
+  border-radius: 16px;
+  box-shadow: 0 8px 20px #0000002a;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.publicar-container h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: var(--color-primario);
+}
+
+.form-publicar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-publicar input,
+.form-publicar textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #cccccc;
+  font-size: 1rem;
+}
+
+.form-publicar textarea {
+  height: 120px;
+  resize: none;
+}
+
+.btn-publicar-form {
+  margin-top: 10px;
+  padding: 14px;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  background: var(--color-secundario);
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.btn-publicar-form:hover {
+  background: var(--color-acento);
+}
+
+.mensaje-publicar {
+  text-align: center;
+  margin-top: 10px;
+  font-weight: bold;
+}
