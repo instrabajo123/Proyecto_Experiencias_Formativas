@@ -1,4 +1,3 @@
-// js/detalle.js
 import {
   db,
   auth,
@@ -6,220 +5,176 @@ import {
   doc,
   getDoc,
   collection,
-  getDocs,
-  setDoc,
-  updateDoc
+  addDoc,
+  getDocs
 } from "./firebase-config.js";
 
+/* ---------------------------------------------------
+   REFERENCIAS DEL DOM
+--------------------------------------------------- */
+const img = document.getElementById("detalle-img");
+const titulo = document.getElementById("detalle-titulo");
+const desc = document.getElementById("detalle-desc");
+const precio = document.getElementById("detalle-precio");
+const ratingLabel = document.getElementById("detalle-rating");
+
+const comentariosLista = document.getElementById("comentarios-lista");
+const comentariosArea = document.getElementById("comentarios-area");
+
+const estrellas = document.getElementById("rating-stars");
+const textoComentario = document.getElementById("comentario-texto");
+const btnEnviar = document.getElementById("btn-enviar-comentario");
+
+let trabajoActual = null;
+let estrellasSeleccionadas = 0;
+
+/* ---------------------------------------------------
+   OBTENER ID DE LA URL
+--------------------------------------------------- */
 const params = new URLSearchParams(window.location.search);
-const trabajoID = params.get("id");
+const id = params.get("id");
 
-const imgEl          = document.getElementById("detalle-imagen");
-const tituloEl       = document.getElementById("detalle-titulo");
-const descEl         = document.getElementById("detalle-descripcion");
-const autorEl        = document.getElementById("detalle-autor");
-const precioEl       = document.getElementById("detalle-precio");
-const promedioGlobal = document.getElementById("promedio-global");
-
-const ratingStarsEl     = document.getElementById("rating-stars");
-const comentarioInputEl = document.getElementById("comentario-input");
-const btnComentar       = document.getElementById("btn-comentar");
-const comentariosListEl = document.getElementById("comentarios-list");
-
-let usuarioActual = null;
-let trabajoData   = null;
-
-// ----------------------
-// Cargar datos del trabajo
-// ----------------------
-async function cargarTrabajo() {
-  if (!trabajoID) {
-    alert("No se encontró el trabajo.");
-    window.location.href = "/public/index.html";
-    return;
-  }
-
-  const ref  = doc(db, "trabajos", trabajoID);
+/* ---------------------------------------------------
+   CARGAR DETALLE DEL TRABAJO
+--------------------------------------------------- */
+async function cargarDetalle() {
+  const ref = doc(db, "trabajos", id);
   const snap = await getDoc(ref);
 
   if (!snap.exists()) {
-    alert("El trabajo no existe.");
-    window.location.href = "/public/index.html";
+    alert("Trabajo no encontrado");
     return;
   }
 
-  trabajoData = snap.data();
+  trabajoActual = snap.data();
 
-  imgEl.src        = trabajoData.imageUrl || "./img/no-image.png";
-  tituloEl.textContent = trabajoData.titulo || "Sin título";
-  descEl.textContent   = trabajoData.descripcion || "";
-  autorEl.textContent  = trabajoData.autor || "Desconocido";
-  precioEl.textContent = trabajoData.precio ? `S/ ${trabajoData.precio}` : "S/ 0.00";
+  img.src = trabajoActual.imageUrl || "";
+  titulo.textContent = trabajoActual.titulo;
+  desc.textContent = trabajoActual.descripcion;
+  precio.textContent = trabajoActual.precio;
 
-  await cargarPromedio();
-  await cargarComentarios();
-  await cargarValorDelUsuario();
+  cargarRatingPromedio();
+  cargarComentarios();
 }
 
-// ----------------------
-// Mostrar estrellas del usuario
-// ----------------------
-function renderStars(valor = 0) {
-  ratingStarsEl.innerHTML = "";
-  ratingStarsEl.dataset.valor = valor;
+cargarDetalle();
 
-  for (let i = 1; i <= 5; i++) {
-    const star = document.createElement("span");
-    star.textContent = i <= valor ? "★" : "☆";
-    star.classList.add("star");
-
-    star.addEventListener("click", () => {
-      if (!usuarioActual) {
-        alert("Debes iniciar sesión para valorar.");
-        return;
-      }
-      if (trabajoData?.autorUid && usuarioActual.uid === trabajoData.autorUid) {
-        alert("No puedes valorar tu propio trabajo.");
-        return;
-      }
-      ratingStarsEl.dataset.valor = i;
-      renderStars(i);
-    });
-
-    ratingStarsEl.appendChild(star);
-  }
-}
-
-// ----------------------
-// Cargar valoración del usuario
-// ----------------------
-async function cargarValorDelUsuario() {
-  if (!usuarioActual) {
-    renderStars(0);
-    return;
-  }
-
-  const ref  = doc(db, "trabajos", trabajoID, "valoraciones", usuarioActual.uid);
-  const snap = await getDoc(ref);
-
-  const valor = snap.exists() ? snap.data().puntuacion : 0;
-  renderStars(valor);
-}
-
-// ----------------------
-// Guardar comentario + valoración
-// ----------------------
-btnComentar?.addEventListener("click", async () => {
-  if (!usuarioActual) {
-    alert("Debes iniciar sesión para comentar.");
-    return;
-  }
-  if (trabajoData?.autorUid && usuarioActual.uid === trabajoData.autorUid) {
-    alert("No puedes comentar tu propio trabajo.");
-    return;
-  }
-
-  const puntuacion = Number(ratingStarsEl.dataset.valor || 0);
-  const comentario = comentarioInputEl.value.trim();
-
-  if (puntuacion === 0) {
-    alert("Debes colocar una valoración (estrellas).");
-    return;
-  }
-
-  const ref = doc(db, "trabajos", trabajoID, "valoraciones", usuarioActual.uid);
-
-  await setDoc(ref, {
-    puntuacion,
-    comentario,
-    fecha: new Date(),
-    uid: usuarioActual.uid,
-    autor: usuarioActual.displayName || usuarioActual.email
-  });
-
-  comentarioInputEl.value = "";
-  await recalcularPromedio();
-  await cargarComentarios();
-  alert("Comentario y valoración guardados.");
-});
-
-// ----------------------
-// Cargar comentarios
-// ----------------------
+/* ---------------------------------------------------
+   CARGAR COMENTARIOS
+--------------------------------------------------- */
 async function cargarComentarios() {
-  comentariosListEl.innerHTML = "";
+  comentariosLista.innerHTML = "";
 
-  const ref  = collection(db, "trabajos", trabajoID, "valoraciones");
+  const ref = collection(db, "trabajos", id, "comentarios");
   const snap = await getDocs(ref);
 
-  snap.forEach((d) => {
-    const data = d.data();
-    const div  = document.createElement("div");
-    div.classList.add("comentario");
-
-    const estrellas = "★".repeat(data.puntuacion) + "☆".repeat(5 - data.puntuacion);
+  snap.forEach(doc => {
+    const c = doc.data();
+    const div = document.createElement("div");
 
     div.innerHTML = `
-      <strong>${data.autor}</strong>
-      <div class="coment-stars">${estrellas}</div>
-      <p>${data.comentario || ""}</p>
+      <p><strong>${c.usuario}</strong> — ⭐ ${c.rating}</p>
+      <p>${c.texto}</p>
+      <hr>
     `;
 
-    comentariosListEl.appendChild(div);
+    comentariosLista.appendChild(div);
   });
 }
 
-// ----------------------
-// Recalcular promedio global
-// ----------------------
-async function recalcularPromedio() {
-  const ref  = collection(db, "trabajos", trabajoID, "valoraciones");
+/* ---------------------------------------------------
+   CALCULAR RATING PROMEDIO
+--------------------------------------------------- */
+async function cargarRatingPromedio() {
+  const ref = collection(db, "trabajos", id, "comentarios");
   const snap = await getDocs(ref);
 
-  let suma  = 0;
+  if (snap.empty) {
+    ratingLabel.textContent = "Sin valoraciones";
+    return;
+  }
+
+  let total = 0;
   let count = 0;
 
-  snap.forEach((d) => {
-    suma  += d.data().puntuacion;
-    count += 1;
+  snap.forEach(doc => {
+    total += doc.data().rating;
+    count++;
   });
 
-  const promedio = count > 0 ? suma / count : 0;
+  const promedio = (total / count).toFixed(1);
+  ratingLabel.textContent = `${promedio} ⭐ (${count})`;
+}
 
-  await updateDoc(doc(db, "trabajos", trabajoID), {
-    promedioValoracion: promedio,
-    totalValoraciones: count
+/* ---------------------------------------------------
+   INTERACCIÓN CON ESTRELLAS (RATING)
+--------------------------------------------------- */
+estrellas.addEventListener("mousemove", (e) => {
+  const rect = estrellas.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const percent = x / rect.width;
+  const rating = Math.ceil(percent * 5);
+
+  estrellas.textContent = "★★★★★".slice(0, rating) + "☆☆☆☆☆".slice(0, 5 - rating);
+});
+
+estrellas.addEventListener("mouseleave", () => {
+  if (estrellasSeleccionadas === 0) {
+    estrellas.textContent = "☆☆☆☆☆";
+  } else {
+    estrellas.textContent =
+      "★★★★★".slice(0, estrellasSeleccionadas) +
+      "☆☆☆☆☆".slice(0, 5 - estrellasSeleccionadas);
+  }
+});
+
+estrellas.addEventListener("click", (e) => {
+  const rect = estrellas.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  estrellasSeleccionadas = Math.ceil((x / rect.width) * 5);
+});
+
+/* ---------------------------------------------------
+   GUARDAR COMENTARIO + VALORACIÓN
+--------------------------------------------------- */
+btnEnviar.addEventListener("click", async () => {
+  if (estrellasSeleccionadas === 0) {
+    alert("Debes seleccionar una valoración.");
+    return;
+  }
+
+  if (textoComentario.value.trim() === "") {
+    alert("Debes escribir un comentario.");
+    return;
+  }
+
+  const ref = collection(db, "trabajos", id, "comentarios");
+
+  await addDoc(ref, {
+    usuario: auth.currentUser.email,
+    texto: textoComentario.value,
+    rating: estrellasSeleccionadas,
+    fecha: new Date()
   });
 
-  await cargarPromedio();
-}
+  textoComentario.value = "";
+  estrellasSeleccionadas = 0;
+  estrellas.textContent = "☆☆☆☆☆";
 
-// ----------------------
-// Cargar promedio global desde el doc
-// ----------------------
-async function cargarPromedio() {
-  const ref  = doc(db, "trabajos", trabajoID);
-  const snap = await getDoc(ref);
+  cargarComentarios();
+  cargarRatingPromedio();
+});
 
-  if (!snap.exists()) return;
-
-  const data     = snap.data();
-  const promedio = data.promedioValoracion || 0;
-
-  const full = Math.floor(promedio);
-  let stars  = "★".repeat(full);
-  if (promedio - full >= 0.5) stars += "☆";
-  stars = stars.padEnd(5, "☆");
-
-  promedioGlobal.innerHTML = `
-    <span class="star-prom">${stars}</span> (${promedio.toFixed(1)})
-  `;
-}
-
-// ----------------------
-// Detectar sesión
-// ----------------------
+/* ---------------------------------------------------
+   MOSTRAR ÁREA DE COMENTARIOS SOLO SI HAY USUARIO
+--------------------------------------------------- */
 onAuthStateChanged(auth, (user) => {
-  usuarioActual = user || null;
-  cargarTrabajo();
+  if (user) comentariosArea.classList.remove("hidden");
+});
+
+/* ---------------------------------------------------
+   BOTÓN COMPRAR → PAGO SIMULADO
+--------------------------------------------------- */
+document.getElementById("btn-comprar").addEventListener("click", () => {
+  window.location.href = `pago.html?id=${id}`;
 });

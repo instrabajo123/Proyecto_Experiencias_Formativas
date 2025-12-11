@@ -7,103 +7,11 @@
 
   <link rel="stylesheet" href="./css/styles.css">
   <link rel="stylesheet" href="./css/ui.css">
-
-  <style>
-    .detalle-container {
-      max-width: 1000px;
-      margin: 40px auto;
-      background: #ffffff;
-      padding: 30px;
-      border-radius: 14px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    }
-    .detalle-header {
-      display: flex;
-      gap: 30px;
-      margin-bottom: 30px;
-      flex-wrap: wrap;
-    }
-    .detalle-img {
-      width: 380px;
-      height: 380px;
-      object-fit: cover;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-    }
-    .detalle-info {
-      flex: 1;
-      min-width: 260px;
-    }
-    #promedio-global {
-      margin: 12px 0;
-      font-size: 20px;
-      color: #FFD700;
-      font-weight: bold;
-    }
-    .star-prom {
-      font-size: 22px;
-      color: #FFD700;
-    }
-
-    #rating-stars {
-      font-size: 32px;
-      margin: 10px 0 20px;
-      cursor: pointer;
-      color: #FFD700;
-      user-select: none;
-    }
-    .star {
-      cursor: pointer;
-      font-size: 36px;
-      margin-right: 4px;
-      transition: 0.2s;
-    }
-    .star:hover {
-      color: #ffcc00;
-    }
-
-    #comentario-input {
-      width: 100%;
-      min-height: 90px;
-      padding: 12px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      margin-bottom: 12px;
-      resize: none;
-      font-size: 15px;
-    }
-    #btn-comentar {
-      background: #007bff;
-      color: #fff;
-      padding: 10px 22px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: 0.2s;
-    }
-    #btn-comentar:hover {
-      background: #0056b3;
-    }
-    .comentario {
-      background: #f9f9f9;
-      padding: 14px;
-      border-radius: 10px;
-      margin-bottom: 12px;
-      border-left: 4px solid #007bff;
-    }
-    .coment-stars {
-      color: #FFD700;
-      font-size: 18px;
-      margin: 4px 0;
-    }
-    .hidden { display:none !important; }
-  </style>
 </head>
 
 <body>
 
-  <!-- HEADER igual que index -->
+  <!-- HEADER GENERAL -->
   <header class="header">
     <div class="logo">Galería Virtual</div>
 
@@ -121,47 +29,51 @@
     </nav>
   </header>
 
-  <div class="detalle-container">
+  <!-- CONTENIDO DEL DETALLE -->
+  <main class="detalle-container">
 
-    <div class="detalle-header">
-      <img id="detalle-imagen" class="detalle-img" src="./img/no-image.png" alt="Trabajo">
+    <!-- IMAGEN DEL TRABAJO -->
+    <img id="detalle-img" class="detalle-img" src="" alt="Trabajo">
 
-      <div class="detalle-info">
-        <h1 id="detalle-titulo">Título</h1>
-        <p><strong>Autor:</strong> <span id="detalle-autor">-</span></p>
-        <p><strong>Precio:</strong> <span id="detalle-precio"></span></p>
+    <!-- TÍTULO -->
+    <h2 id="detalle-titulo"></h2>
 
-        <div id="promedio-global">
-          <span class="star-prom">★★★★★</span> (0.0)
+    <!-- DESCRIPCIÓN -->
+    <p id="detalle-desc"></p>
+
+    <!-- PRECIO -->
+    <p><strong>Precio:</strong> S/ <span id="detalle-precio"></span></p>
+
+    <!-- RATING PROMEDIO -->
+    <p><strong>Valoración:</strong> <span id="detalle-rating"></span></p>
+
+    <!-- BOTÓN COMPRAR -->
+    <button id="btn-comprar" class="btn-comprar">Comprar ahora</button>
+
+    <!-- COMENTARIOS -->
+    <section class="detalle-comentarios">
+      <h3>Comentarios</h3>
+
+      <!-- LISTADO -->
+      <div id="comentarios-lista"></div>
+
+      <!-- AREA DE COMENTAR -->
+      <div id="comentarios-area" class="hidden">
+
+        <label>Tu valoración:</label>
+        <div id="rating-stars" class="star-rating">
+          ☆☆☆☆☆
         </div>
+
+        <textarea id="comentario-texto" placeholder="Escribe un comentario..."></textarea>
+
+        <button id="btn-enviar-comentario" class="btn-comentar">Comentar</button>
       </div>
-    </div>
+    </section>
 
-    <div>
-      <h3>Descripción</h3>
-      <p id="detalle-descripcion"></p>
-    </div>
+  </main>
 
-    <hr style="margin: 25px 0;">
-
-    <div>
-      <h3>Tu valoración</h3>
-      <div id="rating-stars" data-valor="0">★★★★★</div>
-    </div>
-
-    <div>
-      <h3>Deja tu comentario</h3>
-      <textarea id="comentario-input" placeholder="Escribe aquí tu comentario..."></textarea>
-      <button id="btn-comentar">Comentar</button>
-    </div>
-
-    <hr style="margin: 30px 0;">
-
-    <h3>Comentarios</h3>
-    <div id="comentarios-list"></div>
-
-  </div>
-
+  <!-- SCRIPTS -->
   <script type="module" src="./js/firebase-config.js"></script>
   <script type="module" src="./js/auth.js"></script>
   <script type="module" src="./js/detalle.js"></script>

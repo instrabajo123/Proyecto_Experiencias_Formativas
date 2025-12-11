@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Pago - Simulación</title>
+
+  <style>
+    body {
+      font-family: Poppins, sans-serif;
+      background: #eef1f7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .pay-box {
+      background: white;
+      padding: 30px;
+      width: 350px;
+      border-radius: 14px;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+    }
+
+    h2 {
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #555;
+      margin-bottom: 15px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 15px;
+      padding: 12px;
+      border: none;
+      background: #2d67ff;
+      color: white;
+      border-radius: 8px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="pay-box">
+    <h2>Pago Simulado</h2>
+    <p>Ingrese datos ficticios para completar la compra.</p>
+
+    <input type="text" placeholder="Nombre en tarjeta">
+    <input type="text" placeholder="Número de tarjeta (simulado)">
+    <input type="text" placeholder="MM/YY">
+    <input type="text" placeholder="CVV">
+
+    <button onclick="procesarPago()">Pagar ahora</button>
+  </div>
+
+  <script>
+    function procesarPago() {
+      // Obtener ID del trabajo
+      const id = new URLSearchParams(window.location.search).get("id");
+
+      // Guardar como "pago aprobado"
+      localStorage.setItem("compra_" + id, "aprobado");
+
+      // Ir a pantalla de éxito
+      window.location.href = "pago_exitoso.html?id=" + id;
+    }
+  </script>
+
+</body>
+</html>

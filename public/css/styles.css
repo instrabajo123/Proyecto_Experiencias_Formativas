@@ -242,3 +242,16 @@ a {
     height: auto;
   }
 }
+
+
+.btn-comprar {
+  background: #2d67ff;
+  color: white;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.btn-comprar:hover {
+  background: #1d4ed8;
+}
