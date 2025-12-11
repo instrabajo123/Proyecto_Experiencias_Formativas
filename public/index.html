@@ -1,0 +1,58 @@
+<!-- === index.html === -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Galería Virtual</title>
+
+  <!-- Estilos globales -->
+  <link rel="stylesheet" href="./css/styles.css" />
+  <link rel="stylesheet" href="./css/ui.css" />
+
+  <style>
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ========================= HEADER ========================= -->
+  <header class="header">
+    <div class="logo">Galería Virtual</div>
+
+    <nav class="nav">
+
+      <a href="/public/index.html">Inicio</a>
+      <a href="/public/publicar.html">Publicar</a>
+
+      <!-- Botón de login -->
+      <button id="btn-login" class="btn-acceder">Acceder</button>
+
+      <!-- Opciones visibles solo con sesión -->
+      <div id="user-options" class="hidden user-menu">
+        <a id="btn-perfil" href="/public/perfil.html">Mi Perfil</a>
+        <a id="btn-admin" href="/public/admin.html" class="hidden">Panel Admin</a>
+        <button id="btn-logout" class="btn-logout">Cerrar sesión</button>
+      </div>
+
+    </nav>
+  </header>
+
+  <!-- ========================= GALERÍA ========================= -->
+  <main class="gallery-container">
+    <h2>Trabajos Destacados</h2>
+    <div id="gallery" class="gallery-grid">
+      <!-- Aquí se insertan los cards -->
+    </div>
+  </main>
+
+  <!-- ========================= SCRIPTS ========================= -->
+  <script type="module" src="./js/firebase-config.js"></script>
+  <script type="module" src="./js/auth.js"></script>
+  <script type="module" src="./js/main.js"></script>
+
+</body>
+</html>

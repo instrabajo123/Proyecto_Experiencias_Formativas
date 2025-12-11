@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Administración</title>
+
+  <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/ui.css">
+
+  <style>
+    .admin-card {
+      background: white;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      display: flex;
+      gap: 20px;
+      border: 1px solid #ddd;
+      align-items: flex-start;
+    }
+
+    .admin-card img {
+      width: 140px;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .admin-info {
+      flex: 1;
+    }
+
+    .admin-actions button {
+      margin-top: 5px;
+      display: block;
+      width: 100%;
+    }
+
+    .filters button {
+      margin-right: 10px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      border: none;
+      background: #1565c0;
+      color: white;
+      cursor: pointer;
+    }
+
+    .filters button:hover {
+      background: #0d47a1;
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="header">
+  <div class="logo">Galería Virtual</div>
+
+  <nav class="nav">
+    <a href="/public/index.html">Inicio</a>
+    <a href="/public/publicar.html">Publicar</a>
+
+    <button id="btn-login" class="btn-acceder">Acceder</button>
+
+    <div id="user-options" class="hidden user-menu">
+      <a id="btn-perfil" href="/public/perfil.html">Mi Perfil</a>
+      <a id="btn-admin" href="/public/admin.html" class="hidden">Panel Admin</a>
+      <button id="btn-logout" class="btn-logout">Cerrar sesión</button>
+    </div>
+  </nav>
+</header>
+
+<div class="gallery-container">
+
+  <h2>Gestión de Publicaciones</h2>
+
+  <div class="filters">
+    <button data-filter="todos">Todos</button>
+    <button data-filter="aprobados">Aprobados</button>
+    <button data-filter="pendientes">Pendientes</button>
+    <button data-filter="rechazados">Rechazados</button>
+  </div>
+
+  <div id="admin-list"></div>
+</div>
+
+<script type="module" src="./js/firebase-config.js"></script>
+<script type="module" src="./js/auth.js"></script>
+<script type="module" src="./js/admin.js"></script>
+
+</body>
+</html>

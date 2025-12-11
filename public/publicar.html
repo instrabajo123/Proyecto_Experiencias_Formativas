@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Publicar Trabajo</title>
+<link rel="stylesheet" href="/css/styles.css">
+<link rel="stylesheet" href="/css/ui.css">
+</head>
+<body>
+
+
+<!-- NAVBAR SIMPLE -->
+<header class="header">
+  <div class="logo">Galería Virtual</div>
+
+  <nav class="nav">
+
+    <a href="/public/index.html">Inicio</a>
+    <a href="/public/publicar.html">Publicar</a>
+
+    <button id="btn-login" class="btn-acceder">Acceder</button>
+
+    <div id="user-options" class="hidden user-menu">
+      <a id="btn-perfil" href="/public/perfil.html">Mi Perfil</a>
+      <a id="btn-admin" href="/public/admin.html" class="hidden">Panel Admin</a>
+      <button id="btn-logout" class="btn-logout">Cerrar sesión</button>
+    </div>
+
+  </nav>
+</header>
+
+
+<!-- CONTENEDOR PRINCIPAL -->
+<main class="publicar-container">
+<h2>Publicar un Nuevo Trabajo</h2>
+
+
+<!-- FORMULARIO -->
+<form id="form-publicar" class="card form-publicacion">
+
+
+<label>Título del trabajo</label>
+<input type="text" id="titulo" required>
+
+
+<label>Descripción</label>
+<textarea id="descripcion" rows="4" required></textarea>
+
+
+<label>Precio (USD)</label>
+<input type="number" id="precio" min="1" step="0.01" required>
+
+
+<label>Imagen del trabajo</label>
+<input type="file" id="imagen" accept="image/*" required>
+
+
+<button type="submit" class="btn-primary">Publicar</button>
+</form>
+
+
+<!-- MENSAJE DE ESTADO -->
+<p id="mensaje" class="mensaje-estado"></p>
+</main>
+
+
+<!-- IMPORTAR FIREBASE Y JS -->
+<script type="module" src="/js/firebase-config.js"></script>
+<script type="module" src="/js/auth.js"></script>
+<script type="module" src="/js/storage.js"></script>
+<script type="module" src="/js/firestore.js"></script>
+<script type="module" src="/js/publicar.js"></script>
+
+
+</body>
+</html>
